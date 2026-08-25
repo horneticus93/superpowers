@@ -427,7 +427,7 @@ if [[ $BOOTSTRAP -eq 1 ]]; then
 Creates \`plugins/superpowers/\` by copying the tracked plugin files from upstream, including \`.codex-plugin/plugin.json\`, \`assets/\`, and \`hooks/\`.
 
 Run via: \`scripts/sync-to-codex-plugin.sh --bootstrap\`
-Upstream commit: https://github.com/obra/superpowers/commit/$UPSTREAM_SHA
+Source commit: https://github.com/horneticus93/superpowers/commit/$UPSTREAM_SHA
 
 This is a one-time bootstrap. Subsequent syncs will be normal (non-bootstrap) runs using the same tracked upstream plugin files."
 else
@@ -437,7 +437,7 @@ else
 Copies the tracked plugin files from upstream, including the committed Codex manifest, assets, and hooks.
 
 Run via: \`scripts/sync-to-codex-plugin.sh\`
-Upstream commit: https://github.com/obra/superpowers/commit/$UPSTREAM_SHA
+Source commit: https://github.com/horneticus93/superpowers/commit/$UPSTREAM_SHA
 
 Running the sync tool again against the same upstream SHA should produce a PR with an identical diff — use that to verify the tool is behaving."
 fi
@@ -445,7 +445,7 @@ fi
 git commit --quiet -m "$COMMIT_TITLE
 
 Automated sync via scripts/sync-to-codex-plugin.sh
-Upstream: https://github.com/obra/superpowers/commit/$UPSTREAM_SHA
+Source: https://github.com/horneticus93/superpowers/commit/$UPSTREAM_SHA
 Branch:   $SYNC_BRANCH"
 
 echo "Pushing $SYNC_BRANCH to $FORK..."

@@ -169,33 +169,36 @@ You MUST complete each phase before proceeding to the next.
 
 **Fix the root cause, not the symptom:**
 
-1. **Create Failing Test Case**
-   - Simplest possible reproduction
-   - Automated test if possible
-   - One-off test script if no framework
-   - MUST have before fixing
-   - Use the `superpowers:test-driven-development` skill for writing proper failing tests
-
-2. **Implement Single Fix**
+1. **Implement Single Fix**
    - Address the root cause identified
    - ONE change at a time
    - No "while I'm here" improvements
    - No bundled refactoring
 
-3. **Verify Fix**
-   - Test passes now?
+2. **Confirm the Original Symptom Is Gone**
+   - Re-run the exact reproduction from Phase 1
+   - Does the observed behavior now match the requirement?
+   - If not, return to investigation instead of stacking fixes
+
+3. **Add Regression Protection**
+   - Write the automated regression test after the fix exists
+   - Keep it focused on the corrected consumer-visible behavior
+   - Use `superpowers:code-first-verification` for test quality and ordering
+
+4. **Verify Fix**
+   - Focused test passes now?
    - No other tests broken?
    - Issue actually resolved?
    - Use the `superpowers:verification-before-completion` skill before claiming success
 
-4. **If Fix Doesn't Work**
+5. **If Fix Doesn't Work**
    - STOP
    - Count: How many fixes have you tried?
    - If < 3: Return to Phase 1, re-analyze with new information
-   - **If ≥ 3: STOP and question the architecture (step 5 below)**
+   - **If ≥ 3: STOP and question the architecture (step 6 below)**
    - DON'T attempt Fix #4 without architectural discussion
 
-5. **If 3+ Fixes Failed: Question Architecture**
+6. **If 3+ Fixes Failed: Question Architecture**
 
    **Pattern indicating architectural problem:**
    - Each fix reveals new shared state/coupling/problem in different place
@@ -228,7 +231,7 @@ If you catch yourself thinking:
 
 **ALL of these mean: STOP. Return to Phase 1.**
 
-**If 3+ fixes failed:** Question the architecture (see Phase 4.5)
+**If 3+ fixes failed:** Question the architecture (see Phase 4, step 6)
 
 ## your human partner's Signals You're Doing It Wrong
 
@@ -248,7 +251,7 @@ If you catch yourself thinking:
 | "Issue is simple, don't need process" | Simple issues have root causes too. Process is fast for simple bugs. |
 | "Emergency, no time for process" | Systematic debugging is FASTER than guess-and-check thrashing. |
 | "Just try this first, then investigate" | First fix sets the pattern. Do it right from the start. |
-| "I'll write test after confirming fix works" | Untested fixes don't stick. Test first proves it. |
+| "The manual reproduction passed, so no regression test is needed" | The fix still needs repeatable protection after implementation. |
 | "Multiple fixes at once saves time" | Can't isolate what worked. Causes new bugs. |
 | "Reference too long, I'll adapt the pattern" | Partial understanding guarantees bugs. Read it completely. |
 | "I see the problem, let me fix it" | Seeing symptoms ≠ understanding root cause. |
@@ -261,7 +264,7 @@ If you catch yourself thinking:
 | **1. Root Cause** | Read errors, reproduce, check changes, gather evidence | Understand WHAT and WHY |
 | **2. Pattern** | Find working examples, compare | Identify differences |
 | **3. Hypothesis** | Form theory, test minimally | Confirmed or new hypothesis |
-| **4. Implementation** | Create test, fix, verify | Bug resolved, tests pass |
+| **4. Implementation** | Fix, confirm symptom, add regression protection, verify | Bug resolved, tests pass |
 
 ## When Process Reveals "No Root Cause"
 

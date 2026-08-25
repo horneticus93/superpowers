@@ -43,7 +43,7 @@ Skip any step = lying, not verifying
 | Linter clean | Linter output: 0 errors | Partial check, extrapolation |
 | Build succeeds | Build command: exit 0 | Linter passing, logs look good |
 | Bug fixed | Test original symptom: passes | Code changed, assumed fixed |
-| Regression test works | Red-green cycle verified | Test passes once |
+| Regression test works | Test targets the corrected behavior and a named production break | Test passes once |
 | Agent completed | VCS diff shows changes | Agent reports "success" |
 | Requirements met | Line-by-line checklist | Tests passing |
 
@@ -79,10 +79,11 @@ Skip any step = lying, not verifying
 ❌ "Should pass now" / "Looks correct"
 ```
 
-**Regression tests (TDD Red-Green):**
+**Regression tests:**
 ```
-✅ Write → Run (pass) → Revert fix → Run (MUST FAIL) → Restore → Run (pass)
-❌ "I've written a regression test" (without red-green verification)
+✅ Implement fix → add focused regression test → name the production break it catches → run (pass)
+✅ For high-risk behavior: temporarily mutate the named production branch → test fails → restore → test passes
+❌ "I've written a regression test" (without explaining what break it catches)
 ```
 
 **Build:**

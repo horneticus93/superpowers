@@ -13,9 +13,9 @@ here:
 2. Every test exercises the real thing
 ```
 
-Strict TDD produces both naturally: a test written first and watched
-failing against real code has already proven it can fail, and only earns
-a mock when the real dependency proves slow or external.
+In a code-first workflow, make both principles explicit after the
+implementation exists. Name the production break each test catches and
+exercise real code unless a dependency is genuinely slow or external.
 
 ## Principle 1: Name the Break
 
@@ -149,10 +149,10 @@ BEFORE adding a mock or test helper:
 
 ## Tests Ship With the Implementation
 
-The TDD cycle — failing test, minimal implementation, refactor — is what
-"complete" means. Ship the tests the behavior needs and only those:
-trivial code and human prose earn none, and a test written to satisfy
-process costs maintenance forever.
+Implementation is not complete until its required tests and verification
+ship with it. Add tests after the production change, and add only the tests
+the behavior needs: trivial code and human prose earn none, and a test
+written only to satisfy process costs maintenance forever.
 
 ## The Mutation Check
 

@@ -36,7 +36,7 @@ It starts from the moment you fire up your coding agent. As soon as it sees that
 
 Once it's teased a spec out of the conversation, it shows it to you in chunks short enough to actually read and digest. 
 
-After you've signed off on the design, your agent puts together an implementation plan that's clear enough for an enthusiastic junior engineer with poor taste, no judgement, no project context, and an aversion to testing to follow. It emphasizes true red/green TDD, YAGNI (You Aren't Gonna Need It), and DRY. 
+After you've signed off on the design, your agent puts together an implementation plan that's clear enough for an enthusiastic junior engineer with poor taste, no judgement, no project context, and an aversion to testing to follow. It emphasizes code-first implementation followed by focused automated verification, YAGNI (You Aren't Gonna Need It), and DRY.
 
 Next up, once you say "go", it launches a *subagent-driven-development* process, having agents work through each engineering task, inspecting and reviewing their work, and continuing forward. It's not uncommon for your agent to work autonomously for a couple hours at a time without deviating from the plan you put together.
 
@@ -52,30 +52,18 @@ Installation differs by harness. If you use more than one, install Superpowers s
 
 ### Claude Code
 
-Superpowers is available via the [official Claude plugin marketplace](https://claude.com/plugins/superpowers)
-
-#### Official Marketplace
-
-- Install the plugin from Anthropic's official marketplace:
-
-  ```bash
-  /plugin install superpowers@claude-plugins-official
-  ```
-
-#### Superpowers Marketplace
-
-The Superpowers marketplace provides Superpowers and some other related plugins for Claude Code.
+Install this code-first fork from its repository marketplace. Marketplace copies published by other sources may contain a different development methodology.
 
 - Register the marketplace:
 
   ```bash
-  /plugin marketplace add obra/superpowers-marketplace
+  /plugin marketplace add horneticus93/superpowers
   ```
 
 - Install the plugin from this marketplace:
 
   ```bash
-  /plugin install superpowers@superpowers-marketplace
+  /plugin install superpowers@superpowers-dev
   ```
 
 ### Antigravity
@@ -83,7 +71,7 @@ The Superpowers marketplace provides Superpowers and some other related plugins 
 Install Superpowers as a plugin from this repository:
 
 ```bash
-agy plugin install https://github.com/obra/superpowers
+agy plugin install https://github.com/horneticus93/superpowers
 ```
 
 Antigravity runs the plugin's session-start hook, so Superpowers is active from
@@ -91,46 +79,48 @@ the first message. Reinstall with the same command to update.
 
 ### Codex App
 
-Superpowers is available via the [official Codex plugin marketplace](https://github.com/openai/plugins).
+The public marketplace entry may point to upstream Superpowers. Register this
+repository as a personal marketplace so Codex installs the code-first fork:
 
-- In the Codex app, click on Plugins in the sidebar.
-- You should see `Superpowers` in the Coding section.
-- Click the `+` next to Superpowers and follow the prompts.
+```bash
+git clone https://github.com/horneticus93/superpowers.git
+cd superpowers
+codex plugin marketplace add "$PWD"
+```
+
+Restart Codex if it was open, click **Plugins** in the sidebar, and install
+`superpowers` from the `superpowers-dev` marketplace.
 
 ### Codex CLI
 
-Superpowers is available via the [official Codex plugin marketplace](https://github.com/openai/plugins).
+Clone and register this fork, then install its marketplace entry:
 
-- Open the plugin search interface:
-
-  ```bash
-  /plugins
-  ```
-
-- Search for Superpowers:
-
-  ```bash
-  superpowers
-  ```
-
-- Select `Install Plugin`.
+```bash
+git clone https://github.com/horneticus93/superpowers.git
+cd superpowers
+codex plugin marketplace add "$PWD"
+codex plugin install superpowers@superpowers-dev
+```
 
 ### Cursor
 
-- In Cursor Agent chat, install from marketplace:
+The public marketplace entry may point to upstream Superpowers. For this fork,
+clone the repository and load it as a local plugin:
 
-  ```text
-  /add-plugin superpowers
-  ```
+```bash
+git clone https://github.com/horneticus93/superpowers.git
+mkdir -p ~/.cursor/plugins/local
+ln -s "$(pwd)/superpowers" ~/.cursor/plugins/local/superpowers-code-first
+```
 
-- Or search for "superpowers" in the plugin marketplace.
+Restart Cursor or run **Developer: Reload Window**.
 
 ### Devin CLI
 
 - Install the plugin from this repository:
 
   ```bash
-  devin plugins install obra/superpowers
+  devin plugins install horneticus93/superpowers
   ```
 
 - Update to the latest version with:
@@ -144,7 +134,7 @@ Superpowers is available via the [official Codex plugin marketplace](https://git
 - Register the marketplace:
 
   ```bash
-  droid plugin marketplace add https://github.com/obra/superpowers
+  droid plugin marketplace add https://github.com/horneticus93/superpowers
   ```
 
 - Install the plugin:
@@ -158,7 +148,7 @@ Superpowers is available via the [official Codex plugin marketplace](https://git
 - Install the extension:
 
   ```bash
-  gemini extensions install https://github.com/obra/superpowers
+  gemini extensions install https://github.com/horneticus93/superpowers
   ```
 
 - Update later:
@@ -172,50 +162,30 @@ Superpowers is available via the [official Codex plugin marketplace](https://git
 - Register the marketplace:
 
   ```bash
-  copilot plugin marketplace add obra/superpowers-marketplace
+  copilot plugin marketplace add horneticus93/superpowers
   ```
 
 - Install the plugin:
 
   ```bash
-  copilot plugin install superpowers@superpowers-marketplace
+  copilot plugin install superpowers@superpowers-dev
   ```
 
 ### Grok Build CLI
 
-Superpowers is available via the [official Grok plugin marketplace](https://github.com/xai-org/plugin-marketplace).
-
-- Install the plugin from xAI's official marketplace:
-
-  ```bash
-  grok plugin install superpowers@xai-official --trust
-  ```
-
-- Or open the marketplace in the TUI, search for Superpowers, and install it:
-
-  ```text
-  /marketplace
-  ```
+The official Grok marketplace entry is maintained separately and may point to
+upstream Superpowers. This fork does not currently publish a Grok marketplace
+entry; do not use the official listing if you require the code-first workflow.
 
 ### Kimi Code
 
-Superpowers is available in Kimi Code's plugin marketplace.
+Install directly from this repository so Kimi uses the code-first fork:
 
-- Open Kimi Code's plugin manager:
+```text
+/plugins install https://github.com/horneticus93/superpowers
+```
 
-  ```text
-  /plugins
-  ```
-
-- Go to `Marketplace` > `Superpowers` and install it.
-
-- Or install directly from this repository:
-
-  ```text
-  /plugins install https://github.com/obra/superpowers
-  ```
-
-- Detailed docs: [docs/README.kimi.md](docs/README.kimi.md)
+Detailed docs: [docs/README.kimi.md](docs/README.kimi.md)
 
 ### OpenCode
 
@@ -225,7 +195,7 @@ already use it in another harness.
 - Tell OpenCode:
 
   ```
-  Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
+  Fetch and follow instructions from https://raw.githubusercontent.com/horneticus93/superpowers/refs/heads/main/.opencode/INSTALL.md
   ```
 
 - Detailed docs: [docs/README.opencode.md](docs/README.opencode.md)
@@ -235,7 +205,7 @@ already use it in another harness.
 Install Superpowers as a Pi package from this repository:
 
 ```bash
-pi install git:github.com/obra/superpowers
+pi install git:github.com/horneticus93/superpowers
 ```
 
 For local development, run Pi with this checkout loaded as a temporary package:
@@ -251,7 +221,7 @@ The Pi package loads the Superpowers skills and a small extension that injects t
 Install Superpowers as a Hermes plugin from this repository:
 
 ```bash
-hermes plugins install obra/superpowers --enable
+hermes plugins install horneticus93/superpowers --enable
 ```
 
 Restart any active Hermes sessions after installing. Note: Hermes has no
@@ -268,7 +238,7 @@ turn loses the bootstrap — start a fresh session if skills stop triggering.
 
 4. **subagent-driven-development** or **executing-plans** - Activates with plan. Dispatches fresh subagent per task with two-stage review (spec compliance, then code quality), or executes in batches with human checkpoints.
 
-5. **test-driven-development** - Activates during implementation. Enforces RED-GREEN-REFACTOR: write failing test, watch it fail, write minimal code, watch it pass, commit. Deletes code written before tests.
+5. **code-first-verification** - Activates during implementation. Requires production behavior first, then focused tests and fresh verification evidence.
 
 6. **requesting-code-review** - Activates between tasks. Reviews against plan, reports issues by severity. Critical issues block progress.
 
@@ -281,15 +251,15 @@ turn loses the bootstrap — start a fresh session if skills stop triggering.
 Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of the folks at [Prime Radiant](https://primeradiant.com).
 
 - **Discord**: [Join us](https://discord.gg/35wsABTejz) for community support, questions, and sharing what you're building with Superpowers
-- **Issues**: https://github.com/obra/superpowers/issues
+- **Issues**: https://github.com/horneticus93/superpowers/issues
 - **Release announcements**: [Sign up](https://primeradiant.com/superpowers/) to get notified about new versions
 
 ## What's Inside
 
 ### Skills Library
 
-**Testing**
-- **test-driven-development** - RED-GREEN-REFACTOR cycle (includes testing anti-patterns reference)
+**Implementation and testing**
+- **code-first-verification** - Production code first, focused automated tests afterward (includes good-test design reference)
 
 **Debugging**
 - **systematic-debugging** - 4-phase root cause process (includes root-cause-tracing, defense-in-depth, condition-based-waiting techniques)
@@ -312,7 +282,7 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 
 ## Philosophy
 
-- **Test-Driven Development** - Write tests first, always
+- **Code-first verification** - Implement production behavior first, then write focused tests
 - **Systematic over ad-hoc** - Process over guessing
 - **Complexity reduction** - Simplicity as primary goal
 - **Evidence over claims** - Verify before declaring success

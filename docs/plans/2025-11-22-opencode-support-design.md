@@ -263,7 +263,7 @@ superpowers/
 1. **Create isolated workspace** (using git worktrees)
    - Branch: `feature/opencode-support`
 
-2. **Follow TDD where applicable**
+2. **Implement production behavior before adding or changing its tests**
    - Test shared core functions
    - Test skill discovery and parsing
    - Integration tests for both platforms

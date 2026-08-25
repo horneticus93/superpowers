@@ -1,22 +1,22 @@
 #!/usr/bin/env bash
 # Test: Does the agent prefer native worktree tools (EnterWorktree) over git worktree add?
-# Framework: RED-GREEN-REFACTOR per testing-skills-with-subagents.md
+# Framework: before/after behavior validation per validating-skills-with-subagents.md
 #
 # Drill coverage: evals/scenarios/worktree-creation-under-pressure.yaml lifts
-# only the PRESSURE phase (existing .worktrees/ + urgency framing). The RED
-# and GREEN baselines below are not covered by drill — kept here so the
-# RED-GREEN-REFACTOR validation remains rerunnable end-to-end.
+# only the PRESSURE phase (existing .worktrees/ + urgency framing). The CONTROL
+# and UPDATED baselines below are not covered by drill — kept here so the
+# Before/after validation remains rerunnable end-to-end.
 #
-# RED:   Skill without Step 1a (no native tool preference). Agent should use git worktree add.
-# GREEN: Skill with Step 1a (explicit tool naming + consent bridge). Agent should use EnterWorktree.
-# PRESSURE: Same as GREEN but under time pressure with existing .worktrees/ dir.
+# CONTROL: Skill without Step 1a (no native tool preference). Agent should use git worktree add.
+# UPDATED: Skill with Step 1a (explicit tool naming + consent bridge). Agent should use EnterWorktree.
+# PRESSURE: Same as UPDATED but under time pressure with existing .worktrees/ dir.
 #
 # Key insight: the fix is Step 1a's text, not file separation. Three things make it work:
 #   1. Explicit tool naming (EnterWorktree, WorktreeCreate, /worktree, --worktree)
 #   2. Consent bridge ("user's consent = authorization to use native tool")
 #   3. Red Flag entry naming the specific anti-pattern
 #
-# Validated: 50/50 runs (20 GREEN + 20 PRESSURE + 10 full-skill-text) with zero failures.
+# Validated: 50/50 runs (20 UPDATED + 20 PRESSURE + 10 full-skill-text) with zero failures.
 
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -40,7 +40,7 @@ echo "=== Worktree Native Preference Test ==="
 echo ""
 
 # Phase selection
-PHASE="${1:-red}"
+PHASE="${1:-control}"
 
 run_and_check() {
     local phase_name="$1"
@@ -73,7 +73,7 @@ run_and_check() {
         mentioned_enter=$(echo "$output" | grep -qi "EnterWorktree" && echo "yes" || echo "no")
 
         if [ "$expect_native" = "true" ]; then
-            # GREEN/PRESSURE: expect native tool, no git worktree add
+            # UPDATED/PRESSURE: expect native tool, no git worktree add
             if [ "$used_git_worktree_add" = "no" ]; then
                 pass=$((pass + 1))
                 [ "$RUNS" -gt 1 ] && echo "  Run $i: PASS (no git worktree add)"
@@ -83,7 +83,7 @@ run_and_check() {
                 [ "$RUNS" -gt 1 ] && echo "    Output: ${output:0:200}"
             fi
         else
-            # RED: expect git worktree add, no EnterWorktree
+            # CONTROL: expect git worktree add, no EnterWorktree
             if [ "$mentioned_enter" = "yes" ]; then
                 fail=$((fail + 1))
                 echo "  Run $i: [UNEXPECTED] Agent used EnterWorktree WITHOUT Step 1a"
@@ -112,17 +112,17 @@ run_and_check() {
     fi
 }
 
-if [ "$PHASE" = "red" ]; then
-    echo "--- RED PHASE: Running WITHOUT Step 1a (current skill) ---"
+if [ "$PHASE" = "control" ]; then
+    echo "--- CONTROL PHASE: Running WITHOUT Step 1a (current skill) ---"
     echo "Expected: Agent uses 'git worktree add' (no native tool awareness)"
     echo ""
-    run_and_check "RED" "$SCENARIO" "none" "false"
+    run_and_check "CONTROL" "$SCENARIO" "none" "false"
 
-elif [ "$PHASE" = "green" ]; then
-    echo "--- GREEN PHASE: Running WITH Step 1a (updated skill) ---"
+elif [ "$PHASE" = "updated" ]; then
+    echo "--- UPDATED PHASE: Running WITH Step 1a (updated skill) ---"
     echo "Expected: Agent uses EnterWorktree instead of git worktree add"
     echo ""
-    run_and_check "GREEN" "$SCENARIO" "none" "true"
+    run_and_check "UPDATED" "$SCENARIO" "none" "true"
 
 elif [ "$PHASE" = "pressure" ]; then
     echo "--- PRESSURE PHASE: Urgency + existing .worktrees/ ---"
@@ -145,13 +145,13 @@ elif [ "$PHASE" = "all" ]; then
     echo "Runs per phase: $RUNS"
     echo ""
 
-    echo "=== RED ==="
-    run_and_check "RED" "$SCENARIO" "none" "false" || true
+    echo "=== CONTROL ==="
+    run_and_check "CONTROL" "$SCENARIO" "none" "false" || true
     echo ""
 
-    echo "=== GREEN ==="
-    run_and_check "GREEN" "$SCENARIO" "none" "true"
-    green_result=$?
+    echo "=== UPDATED ==="
+    run_and_check "UPDATED" "$SCENARIO" "none" "true"
+    updated_result=$?
     echo ""
 
     echo "=== PRESSURE ==="
@@ -169,7 +169,7 @@ Report EXACTLY what tool/command you used to create the workspace.'
     pressure_result=$?
     echo ""
 
-    if [ "${green_result:-0}" -eq 0 ] && [ "${pressure_result:-0}" -eq 0 ]; then
+    if [ "${updated_result:-0}" -eq 0 ] && [ "${pressure_result:-0}" -eq 0 ]; then
         echo "=== ALL PHASES PASSED ==="
     else
         echo "=== SOME PHASES FAILED ==="
