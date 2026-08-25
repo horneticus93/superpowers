@@ -18,6 +18,9 @@ Live in `tests/`. Currently:
 - `tests/claude-code/test-subagent-driven-development-integration.sh` — extended SDD integration with token analysis (drill covers the YAGNI subset; bash adds commit-count, Claude Code task-tracking, and token telemetry assertions).
 - `tests/claude-code/test-worktree-native-preference.sh` — before/after validation for worktree skill (drill covers the PRESSURE phase; bash also covers baseline and revised fixtures).
 - `tests/code-first/test-code-first-policy.sh` — static and structural checks for implementation-before-tests guidance across packaged skills and manifests.
+- `tests/code-first/test-writing-skills-validator.sh` — portable validator checks for skill frontmatter, folder naming, and linked references.
+- `tests/code-first/forward-eval-scenarios.md` — reusable fresh-agent scenarios for direct implementation, bug fixes, plans, subagent execution, and test-only tasks.
+- `tests/code-first/forward-eval-results.md` — recorded fresh-agent outcomes for the current code-first workflow revision.
 - `tests/explicit-skill-requests/` — Haiku-specific, multi-turn, and skill-name-prompted tests not covered by drill.
 
 Run plugin tests via the relevant directory's `run-*.sh` or `npm test`.

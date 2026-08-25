@@ -63,7 +63,7 @@ After each commit:
 
 After both commits:
 
-- `grep -rn "CLAUDE\.md" skills/` should return only the documented carve-outs (CREATION-LOG, CLAUDE_MD_TESTING and its inbound reference, the priority list in using-superpowers).
+- `grep -rn "CLAUDE\.md" skills/` should return only the documented carve-outs (`CLAUDE_MD_TESTING` and its inbound reference, plus the priority list in `using-superpowers`).
 
 ## Non-goals
 

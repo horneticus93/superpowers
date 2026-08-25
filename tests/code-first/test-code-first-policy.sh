@@ -105,6 +105,35 @@ for path in "${metadata_files[@]}"; do
   fi
 done
 
+fork_install_files=(
+  "README.md"
+  ".opencode/INSTALL.md"
+  "docs/README.opencode.md"
+  "docs/README.kimi.md"
+  ".hermes-plugin/__init__.py"
+)
+
+for path in "${fork_install_files[@]}"; do
+  if grep -qF "horneticus93/superpowers" "$REPO_ROOT/$path"; then
+    pass "$path installs or links to the code-first fork"
+  else
+    fail "$path installs or links to the code-first fork"
+  fi
+
+  if grep -qF "obra/superpowers" "$REPO_ROOT/$path"; then
+    fail "$path does not route users to upstream Superpowers"
+  else
+    pass "$path does not route users to upstream Superpowers"
+  fi
+done
+
+assert_file \
+  "tests/code-first/forward-eval-scenarios.md" \
+  "code-first behavioral forward-evaluation scenarios exist"
+assert_file \
+  "tests/code-first/forward-eval-results.md" \
+  "code-first behavioral forward-evaluation results are recorded"
+
 matches=""
 while IFS= read -r -d '' path; do
   if file_matches="$(grep -IinE "$forbidden" "$REPO_ROOT/$path" 2>/dev/null || true)"; then

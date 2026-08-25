@@ -186,8 +186,11 @@ Avoid fill-in-the-blank boilerplate and copies in multiple languages.
 After the skill draft exists:
 
 ```bash
-python3 /path/to/skill-creator/scripts/quick_validate.py /path/to/skill
+python3 skills/writing-skills/validate-skill.py skills/your-skill
 ```
+
+Resolve both paths from the Superpowers checkout. The validator uses only the
+Python standard library and works across supported harnesses.
 
 Also check:
 
