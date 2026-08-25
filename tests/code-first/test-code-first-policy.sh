@@ -133,6 +133,12 @@ assert_file \
 assert_file \
   "tests/code-first/forward-eval-results.md" \
   "code-first behavioral forward-evaluation results are recorded"
+assert_file \
+  "tests/code-first/artifacts/cf1-execution.md" \
+  "direct-feature execution evidence is retained"
+assert_file \
+  "tests/code-first/artifacts/cf2-execution.md" \
+  "bug-fix execution evidence is retained"
 
 matches=""
 while IFS= read -r -d '' path; do

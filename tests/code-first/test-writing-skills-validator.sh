@@ -69,4 +69,70 @@ else
   pass "rejects a missing relative reference"
 fi
 
+mkdir -p "$FIXTURE_ROOT/unknown-field"
+cat >"$FIXTURE_ROOT/unknown-field/SKILL.md" <<'EOF'
+---
+name: unknown-field
+description: Use when checking unsupported frontmatter
+version: 1
+---
+
+# Unknown Field
+EOF
+
+if python3 "$VALIDATOR" "$FIXTURE_ROOT/unknown-field" >/dev/null 2>&1; then
+  fail "rejects unsupported frontmatter fields"
+else
+  pass "rejects unsupported frontmatter fields"
+fi
+
+mkdir -p "$FIXTURE_ROOT/duplicate-field"
+cat >"$FIXTURE_ROOT/duplicate-field/SKILL.md" <<'EOF'
+---
+name: duplicate-field
+name: duplicate-field
+description: Use when checking duplicate frontmatter
+---
+
+# Duplicate Field
+EOF
+
+if python3 "$VALIDATOR" "$FIXTURE_ROOT/duplicate-field" >/dev/null 2>&1; then
+  fail "rejects duplicate frontmatter fields"
+else
+  pass "rejects duplicate frontmatter fields"
+fi
+
+mkdir -p "$FIXTURE_ROOT/malformed-quote"
+cat >"$FIXTURE_ROOT/malformed-quote/SKILL.md" <<'EOF'
+---
+name: malformed-quote
+description: "Use when checking malformed quoting
+---
+
+# Malformed Quote
+EOF
+
+if python3 "$VALIDATOR" "$FIXTURE_ROOT/malformed-quote" >/dev/null 2>&1; then
+  fail "rejects malformed quoted frontmatter values"
+else
+  pass "rejects malformed quoted frontmatter values"
+fi
+
+mkdir -p "$FIXTURE_ROOT/bad-description"
+cat >"$FIXTURE_ROOT/bad-description/SKILL.md" <<'EOF'
+---
+name: bad-description
+description: Portable validation guidance
+---
+
+# Bad Description
+EOF
+
+if python3 "$VALIDATOR" "$FIXTURE_ROOT/bad-description" >/dev/null 2>&1; then
+  fail "rejects descriptions without the Use when trigger form"
+else
+  pass "rejects descriptions without the Use when trigger form"
+fi
+
 echo "All writing-skills validator tests passed"

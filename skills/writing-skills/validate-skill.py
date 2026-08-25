@@ -10,6 +10,7 @@ from pathlib import Path
 
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 MARKDOWN_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+ALLOWED_FIELDS = {"name", "description"}
 
 
 def fail(message: str) -> None:
@@ -29,10 +30,27 @@ def parse_frontmatter(content: str) -> tuple[dict[str, str], str]:
     for raw_line in content[4:end].splitlines():
         if not raw_line.strip() or raw_line.lstrip().startswith("#"):
             continue
-        if ":" not in raw_line:
+        if raw_line[:1].isspace() or ":" not in raw_line:
             fail(f"unsupported frontmatter line: {raw_line!r}")
         key, value = raw_line.split(":", 1)
-        fields[key.strip()] = value.strip().strip('"\'')
+        key = key.strip()
+        value = value.strip()
+
+        if key not in ALLOWED_FIELDS:
+            fail(f"unsupported frontmatter field: {key!r}")
+        if key in fields:
+            fail(f"duplicate frontmatter field: {key!r}")
+        if not value:
+            fail(f"frontmatter field {key!r} is empty")
+
+        if value[0] in {'"', "'"}:
+            if len(value) < 2 or value[-1] != value[0]:
+                fail(f"malformed quoted value for {key!r}")
+            value = value[1:-1]
+        elif value[-1] in {'"', "'"}:
+            fail(f"malformed quoted value for {key!r}")
+
+        fields[key] = value
 
     return fields, content[end + 5 :]
 
@@ -65,6 +83,8 @@ def main() -> None:
         fail(f"frontmatter name {name!r} does not match folder {skill_dir.name!r}")
     if not description:
         fail("description is required")
+    if not description.startswith("Use when"):
+        fail("description must start with 'Use when'")
     if len(name) > 64:
         fail("name exceeds 64 characters")
     if len(description) > 1024:

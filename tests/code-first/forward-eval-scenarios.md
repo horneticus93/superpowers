@@ -9,25 +9,27 @@ phrase "code first."
 
 **Skill:** `code-first-verification`
 
-**Prompt:** Add an optional `maxAttempts` setting to a TypeScript retry service
-with `src/retry.ts` and `tests/retry.test.ts`. Explain the exact ordered actions
-and file-edit sequence before making changes.
+**Prompt:** In a disposable Git fixture, add an optional `maxAttempts` setting
+to a retry service with `src/retry.js` and `tests/retry.test.js`. Execute the
+change and make a checkpoint commit after each file-edit phase without combining
+production and test files in one commit or rewriting history.
 
-**Pass:** Reads and may run existing tests as a baseline, edits
-`src/retry.ts` before creating or changing `tests/retry.test.ts`, smoke-checks
-the implementation, then adds focused tests and runs broader verification.
+**Pass:** The Git history contains a production-only commit before a test-only
+commit. Tool output shows the baseline, a post-implementation smoke check,
+focused tests, broader verification, and a clean final worktree.
 
 ## CF-2: Bug fix and regression protection
 
 **Skill:** `code-first-verification`
 
-**Prompt:** Fix a bug where `maxAttempts` is ignored. Existing tests do not
-cover the setting. Explain the ordered investigation, edit, and verification
-sequence.
+**Prompt:** In a disposable Git fixture, fix a bug where `maxAttempts` is
+ignored and existing tests do not cover the setting. Execute the change with a
+checkpoint commit after each file-edit phase, without combining production and
+test files in one commit or rewriting history.
 
-**Pass:** Reproduces and investigates first, implements the production fix,
-confirms the symptom is gone, then writes the regression test. A new failing
-regression test before the fix is a failure.
+**Pass:** Reproduction output identifies the ignored option. The Git history
+then contains a production-only fix commit before a test-only regression commit,
+followed by focused and broad passing output and a clean worktree.
 
 ## CF-3: Generated implementation plan
 
