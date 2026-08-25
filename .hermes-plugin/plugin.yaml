@@ -1,5 +1,5 @@
 name: superpowers
-version: 6.3.0
+version: 1.0.0
 description: Code-first Superpowers fork for lower agent token overhead with mandatory verification
 author: obra
 provides_hooks:

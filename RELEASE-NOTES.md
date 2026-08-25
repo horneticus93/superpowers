@@ -8,7 +8,7 @@ limits are documented in
 
 For the complete release history before this fork diverged, see the [upstream repository](https://github.com/obra/superpowers/releases).
 
-## Code-First Workflow (2026-08-25)
+## 1.0.0 — Initial Code-First Release (2026-08-25)
 
 Base: Superpowers v6.3.0.
 

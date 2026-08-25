@@ -2,7 +2,7 @@
   "name": "superpowers",
   "displayName": "Superpowers",
   "description": "Code-first Superpowers fork: production implementation before tests, designed to reduce agent token and tool-call overhead while retaining verification",
-  "version": "6.3.0",
+  "version": "1.0.0",
   "author": {
     "name": "Jesse Vincent",
     "email": "jesse@fsck.com"

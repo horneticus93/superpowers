@@ -1,6 +1,6 @@
 {
   "name": "superpowers",
-  "version": "6.3.0",
+  "version": "1.0.0",
   "description": "Code-first Superpowers fork designed to reduce agent token and tool-call overhead while retaining automated verification",
   "type": "module",
   "main": ".opencode/plugins/superpowers.js",

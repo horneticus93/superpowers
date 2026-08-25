@@ -1,6 +1,6 @@
 {
   "name": "superpowers",
-  "version": "6.3.0",
+  "version": "1.0.0",
   "description": "Code-first Superpowers methodology fork designed to reduce agent token and tool-call overhead while retaining automated verification.",
   "author": {
     "name": "Jesse Vincent",
