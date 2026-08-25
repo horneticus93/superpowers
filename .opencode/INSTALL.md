@@ -1,5 +1,10 @@
 # Installing Superpowers for OpenCode
 
+> This installs the `horneticus93/superpowers` code-first fork. It writes
+> production code before new or changed tests to reduce agent token and tool-call
+> overhead while retaining mandatory automated verification. See
+> [`docs/CODE-FIRST-FORK.md`](../docs/CODE-FIRST-FORK.md).
+
 ## Prerequisites
 
 - [OpenCode.ai](https://opencode.ai) installed

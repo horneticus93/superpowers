@@ -1,5 +1,10 @@
 # Porting Superpowers to a New Harness
 
+This document applies to the code-first fork described in
+[`CODE-FIRST-FORK.md`](CODE-FIRST-FORK.md). A new harness must preserve its
+production-before-new-tests workflow and must not silently install the upstream
+methodology instead.
+
 This guide explains how to add support for a new harness — an IDE, CLI, or
 agent runner that isn't Claude Code — so that Superpowers skills auto-trigger
 there the same way they do natively.
@@ -764,7 +769,9 @@ dispatcher pattern.
 
 ## Part 8 — Submitting the PR
 
-- Target the **`dev`** branch. One harness per PR.
+- Target this fork's **`main`** branch. One harness per PR. If contributing a
+  methodology-neutral port separately to upstream, follow upstream's current
+  branch policy instead.
 - Fill in the PR template's **"New harness support"** section and paste the
   complete acceptance-test transcript (the "Let's make a react todo list"
   session showing `brainstorming` auto-triggering). A PR without this proof will

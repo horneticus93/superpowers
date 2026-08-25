@@ -1,11 +1,23 @@
 # Superpowers
 
-Superpowers is a complete software development methodology for your coding agents, built on top of a set of composable skills and some initial instructions that make sure your agent uses them.
+> [!IMPORTANT]
+> This is the **code-first fork** maintained at
+> [`horneticus93/superpowers`](https://github.com/horneticus93/superpowers), not
+> the upstream [`obra/superpowers`](https://github.com/obra/superpowers)
+> methodology. Its defining difference is implementation order: the agent writes
+> and reviews production code first, then writes focused automated tests and runs
+> broad verification. See [Why this fork exists](#why-this-fork-exists) and the
+> [complete fork rationale](docs/CODE-FIRST-FORK.md).
+
+Superpowers is a complete software development methodology for coding agents,
+built on top of composable skills and initial instructions that make sure the
+agent uses them.
 
 ## Table of Contents
 
+- [Why this fork exists](#why-this-fork-exists)
 - [How it works](#how-it-works)
-- [Commercial Services](#commercial-services)
+- [Upstream Commercial Services](#upstream-commercial-services)
 - [Getting Started](#installation)
   - [Claude Code](#claude-code)
   - [Antigravity](#antigravity)
@@ -30,6 +42,33 @@ Superpowers is a complete software development methodology for your coding agent
 - [License](#license)
 - [Visual companion telemetry](#visual-companion-telemetry)
 
+## Why this fork exists
+
+This fork is based on the engineering premise that modern flagship coding models
+can produce strong, idiomatic production code directly from a reviewed
+specification and relevant repository context. In long agentic workflows,
+mandatory test-driven development (TDD) can therefore add a costly ceremony:
+generate a deliberately failing test, run it, inspect the expected failure,
+implement the code, and run the test again — often with additional subagent and
+review narration around every phase.
+
+Each extra generation, file edit, tool call, test run, and captured output
+consumes tokens, context-window capacity, and wall-clock time. This fork removes
+that mandatory pre-implementation cycle. The agent instead implements the
+bounded production change from approved requirements, reviews and smoke-checks
+the result, and only then writes focused tests that protect the completed
+behavior. It finishes with the same broader build, lint, test, review, and
+verification gates.
+
+The goal is **lower token consumption and less agent ceremony without weakening
+delivery evidence**. Token savings vary by model, repository, and task, so this
+project does not claim a universal percentage. It treats mandatory TDD as an
+outdated default for modern flagship-model agent workflows, not as a universally
+invalid technique. Tests remain required; only their authorship order changes.
+
+Read [Code-First Fork: Rationale and Contract](docs/CODE-FIRST-FORK.md) for the
+exact workflow, exceptions, safety model, and upstream synchronization policy.
+
 ## How it works
 
 It starts from the moment you fire up your coding agent. As soon as it sees that you're building something, it *doesn't* just jump into trying to write code. Instead, it steps back and asks you what you're really trying to do. 
@@ -42,9 +81,12 @@ Next up, once you say "go", it launches a *subagent-driven-development* process,
 
 There's a bunch more to it, but that's the core of the system. And because the skills trigger automatically, you don't need to do anything special. Your coding agent just has Superpowers.
 
-## Commercial Services
+## Upstream Commercial Services
 
-If you're using Superpowers in enterprise and could benefit from commercial support, additional tooling, or managed spending, please don't hesitate to drop us a line at sales@primeradiant.com.
+Prime Radiant offers commercial support for the upstream Superpowers framework.
+Those services are not operated by this fork's maintainer. If they are relevant
+to you, contact `sales@primeradiant.com` and confirm whether the engagement can
+support this fork's code-first methodology.
 
 ## Installation
 
@@ -140,7 +182,7 @@ Restart Cursor or run **Developer: Reload Window**.
 - Install the plugin:
 
   ```bash
-  droid plugin install superpowers@superpowers
+  droid plugin install superpowers@superpowers-dev
   ```
 
 ### Gemini CLI
@@ -248,11 +290,14 @@ turn loses the bootstrap — start a fresh session if skills stop triggering.
 
 ## Community
 
-Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of the folks at [Prime Radiant](https://primeradiant.com).
+The underlying Superpowers framework was built by
+[Jesse Vincent](https://blog.fsck.com) and the Prime Radiant contributors. This
+code-first fork is distributed and maintained separately at
+[`horneticus93/superpowers`](https://github.com/horneticus93/superpowers).
 
-- **Discord**: [Join us](https://discord.gg/35wsABTejz) for community support, questions, and sharing what you're building with Superpowers
-- **Issues**: https://github.com/horneticus93/superpowers/issues
-- **Release announcements**: [Sign up](https://primeradiant.com/superpowers/) to get notified about new versions
+- **Fork issues**: https://github.com/horneticus93/superpowers/issues
+- **Upstream Discord**: [Superpowers community](https://discord.gg/35wsABTejz)
+- **Upstream announcements**: [Prime Radiant releases](https://primeradiant.com/superpowers/)
 
 ## What's Inside
 
@@ -291,13 +336,17 @@ Read [the original release announcement](https://blog.fsck.com/2025/10/09/superp
 
 ## Contributing
 
-The general contribution process for Superpowers is below. Keep in mind that we don't generally accept contributions of new skills and that any updates to skills must work across all of the coding agents we support.
+Contributions to this fork must preserve the code-first contract documented in
+[`docs/CODE-FIRST-FORK.md`](docs/CODE-FIRST-FORK.md). Fork-specific methodology
+changes must not be submitted upstream, where they conflict with the original
+project's development model.
 
-1. Fork the repository
-2. Switch to the 'dev' branch
-3. Create a branch for your work
+1. Fork or clone `horneticus93/superpowers`
+2. Create a branch from `main`
+3. Make the production or documentation change
 4. Follow the `writing-skills` skill for creating and testing new and modified skills
-5. Submit a PR, being sure to fill in the pull request template.
+5. Run the code-first policy, relevant tests, and behavioral evals
+6. Submit a PR to this fork's `main` branch and complete the pull request template
 
 Skill-behavior tests use the drill eval harness from [superpowers-evals](https://github.com/prime-radiant-inc/superpowers-evals/), cloned into `evals/` — see `evals/README.md` for setup. Plugin-infrastructure tests live at `tests/` and run via the relevant `run-*.sh` or `npm test`.
 
@@ -305,7 +354,10 @@ See `skills/writing-skills/SKILL.md` for the complete guide.
 
 ## Updating
 
-Superpowers updates are somewhat coding-agent dependent, but are often automatic.
+Update from `horneticus93/superpowers`, not an upstream marketplace entry, or
+the code-first workflow may be replaced. The exact update mechanism depends on
+the coding-agent harness; use the same fork-specific source shown in the
+installation section.
 
 ## License
 

@@ -34,6 +34,17 @@ assert_absent() {
   fi
 }
 
+assert_contains() {
+  local path="$1"
+  local needle="$2"
+  local description="$3"
+  if grep -qF "$needle" "$REPO_ROOT/$path"; then
+    pass "$description"
+  else
+    fail "$description"
+  fi
+}
+
 assert_order() {
   local path="$1"
   local earlier="$2"
@@ -68,6 +79,77 @@ assert_file "skills/writing-skills/validating-skills-with-subagents.md" "post-im
 assert_absent "skills/$legacy_skill" "replaced implementation-order skill is absent"
 assert_absent "skills/writing-skills/testing-skills-with-subagents.md" "replaced skill-authoring reference is absent"
 
+assert_file "docs/CODE-FIRST-FORK.md" "authoritative fork rationale exists"
+assert_contains \
+  "README.md" \
+  "## Why this fork exists" \
+  "README prominently explains why the fork exists"
+assert_contains \
+  "README.md" \
+  "lower token consumption" \
+  "README states the token-efficiency objective"
+assert_contains \
+  "README.md" \
+  "Tests remain required; only their authorship order changes." \
+  "README makes clear that testing remains mandatory"
+assert_contains \
+  "docs/CODE-FIRST-FORK.md" \
+  "## Primary difference from upstream" \
+  "fork rationale compares this methodology with upstream"
+assert_contains \
+  "docs/CODE-FIRST-FORK.md" \
+  "## Token-efficiency claim" \
+  "fork rationale documents the token claim and its limits"
+assert_contains \
+  "RELEASE-NOTES.md" \
+  "docs/CODE-FIRST-FORK.md" \
+  "release notes link to the fork rationale"
+assert_contains \
+  "docs/testing.md" \
+  "CODE-FIRST-FORK.md" \
+  "testing guide links to the fork contract"
+assert_contains \
+  "docs/README.opencode.md" \
+  "Code-First Fork: Rationale and Contract" \
+  "OpenCode guide identifies the fork methodology"
+assert_contains \
+  "docs/README.kimi.md" \
+  "Code-First Fork: Rationale and Contract" \
+  "Kimi guide identifies the fork methodology"
+assert_contains \
+  "CLAUDE.md" \
+  "## Code-First Fork Identity" \
+  "contributor guidance protects the fork identity"
+assert_contains \
+  "GEMINI.md" \
+  "docs/CODE-FIRST-FORK.md" \
+  "Gemini guidance protects the fork contract"
+assert_contains \
+  "docs/porting-to-a-new-harness.md" \
+  "CODE-FIRST-FORK.md" \
+  "porting guide protects the fork contract"
+assert_contains \
+  "docs/porting-to-a-new-harness.md" \
+  "Target this fork's **\`main\`** branch." \
+  "porting guide uses this fork's contribution branch"
+assert_contains \
+  ".github/PULL_REQUEST_TEMPLATE.md" \
+  "This PR MUST target the \`main\` branch." \
+  "pull request template targets this fork's main branch"
+assert_contains \
+  ".github/PULL_REQUEST_TEMPLATE.md" \
+  "https://github.com/horneticus93/superpowers/blob/main/docs/CODE-FIRST-FORK.md" \
+  "pull request template links to the published fork contract"
+assert_contains \
+  "README.md" \
+  "droid plugin install superpowers@superpowers-dev" \
+  "Factory Droid installs from the fork marketplace"
+assert_order \
+  "README.md" \
+  "## Why this fork exists" \
+  "## How it works" \
+  "README explains the fork before the general workflow"
+
 assert_order \
   "skills/code-first-verification/SKILL.md" \
   "### 2. Implement Production Behavior" \
@@ -93,6 +175,7 @@ metadata_files=(
   ".cursor-plugin/plugin.json"
   ".devin-plugin/plugin.json"
   ".kimi-plugin/plugin.json"
+  ".hermes-plugin/plugin.yaml"
   "gemini-extension.json"
   "package.json"
 )
@@ -103,15 +186,25 @@ for path in "${metadata_files[@]}"; do
   else
     fail "$path identifies the code-first workflow"
   fi
+
+  if grep -qiF "token" "$REPO_ROOT/$path"; then
+    pass "$path identifies the token-efficiency objective"
+  else
+    fail "$path identifies the token-efficiency objective"
+  fi
 done
 
 fork_install_files=(
-  "README.md"
   ".opencode/INSTALL.md"
   "docs/README.opencode.md"
   "docs/README.kimi.md"
   ".hermes-plugin/__init__.py"
 )
+
+assert_contains \
+  "README.md" \
+  "Install this code-first fork from its repository marketplace." \
+  "README installation directs users to the code-first fork"
 
 for path in "${fork_install_files[@]}"; do
   if grep -qF "horneticus93/superpowers" "$REPO_ROOT/$path"; then
@@ -142,6 +235,12 @@ assert_file \
 
 matches=""
 while IFS= read -r -d '' path; do
+  case "$path" in
+    README.md|RELEASE-NOTES.md|docs/CODE-FIRST-FORK.md|CLAUDE.md|AGENTS.md)
+      continue
+      ;;
+  esac
+
   if file_matches="$(grep -IinE "$forbidden" "$REPO_ROOT/$path" 2>/dev/null || true)"; then
     if [[ -n "$file_matches" ]]; then
       matches+="$path:$file_matches"$'\n'
@@ -150,9 +249,9 @@ while IFS= read -r -d '' path; do
 done < <(git -C "$REPO_ROOT" ls-files --cached --others --exclude-standard -z)
 
 if [[ -z "$matches" ]]; then
-  pass "repository contains no replaced methodology names or ordering directives"
+  pass "active workflow sources contain no replaced methodology directives"
 else
-  fail "repository contains no replaced methodology names or ordering directives"
+  fail "active workflow sources contain no replaced methodology directives"
   printf '%s' "$matches" | sed 's/^/    /'
 fi
 

@@ -1,7 +1,7 @@
 {
   "name": "superpowers",
   "version": "6.3.0",
-  "description": "An agentic skills framework and code-first software development methodology: planning, verification, debugging, and collaboration workflows.",
+  "description": "Code-first Superpowers methodology fork: production implementation before tests, designed to reduce agent token and tool-call overhead while retaining verification.",
   "author": {
     "name": "Jesse Vincent",
     "email": "jesse@fsck.com",
@@ -16,6 +16,7 @@
     "skills",
     "planning",
     "code-first",
+    "token-efficient",
     "debugging",
     "code-review",
     "workflow"
@@ -24,8 +25,8 @@
   "hooks": {},
   "interface": {
     "displayName": "Superpowers",
-    "shortDescription": "Planning, code-first verification, debugging, and delivery workflows for coding agents",
-    "longDescription": "Use Superpowers to guide agent work through brainstorming, implementation planning, code-first verification, systematic debugging, parallel execution, code review, and finish-the-branch workflows.",
+    "shortDescription": "Code-first workflows optimized for lower agent token overhead",
+    "longDescription": "A methodology fork of Superpowers for modern coding models: implement and smoke-check production behavior before writing focused tests, then run broad verification, debugging, review, and delivery gates.",
     "developerName": "Jesse Vincent",
     "category": "Developer Tools",
     "capabilities": [

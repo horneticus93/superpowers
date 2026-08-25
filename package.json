@@ -1,13 +1,14 @@
 {
   "name": "superpowers",
   "version": "6.3.0",
-  "description": "Superpowers skills and runtime bootstrap for coding agents",
+  "description": "Code-first Superpowers fork designed to reduce agent token and tool-call overhead while retaining automated verification",
   "type": "module",
   "main": ".opencode/plugins/superpowers.js",
   "keywords": [
     "pi-package",
     "skills",
     "code-first",
+    "token-efficient",
     "debugging",
     "collaboration",
     "workflow"

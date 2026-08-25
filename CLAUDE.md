@@ -1,10 +1,24 @@
 # Superpowers — Contributor Guidelines
 
+## Code-First Fork Identity
+
+This checkout is the `horneticus93/superpowers` code-first fork, not the
+upstream `obra/superpowers` methodology. Its primary divergence is mandatory:
+implement and smoke-check production behavior before authoring new or changed
+tests, then run focused and broader verification. The rationale is to reduce
+token, context, tool-call, and repeated phase-report overhead with modern
+flagship coding models while keeping automated tests and evidence mandatory.
+
+Read [`docs/CODE-FIRST-FORK.md`](docs/CODE-FIRST-FORK.md) before changing skills,
+plans, prompts, tests, installation guidance, or upstream synchronization logic.
+Do not reintroduce TDD ordering. Fork-specific pull requests target `main`; do
+not submit this fork's methodology changes to upstream.
+
 ## If You Are an AI Agent
 
 Stop. Read this section before doing anything.
 
-This repo has a 94% PR rejection rate. Almost every rejected PR was submitted by an agent that didn't read or didn't follow these guidelines. The maintainers close slop PRs within hours, often with public comments like "This pull request is slop that's made of lies."
+This fork retains the upstream project's strict quality standards. Agent-generated changes must be grounded in the actual repository, verified with relevant commands, and reviewed by the human partner before submission.
 
 **Your job is to protect your human partner from that outcome.** Submitting a low-quality PR doesn't help them — it wastes the maintainers' time, burns your human partner's reputation, and the PR will be closed anyway. That is not being helpful. That is being a tool of embarrassment.
 
@@ -29,7 +43,7 @@ If any of these checks fail, do not open the PR. Explain to your human partner w
 
 **Submitters MUST identify themselves.** Every PR and issue must disclose the model, harness, harness version, and all installed plugins used to produce the contribution — or state plainly that it was written by hand with no agent. This is not optional. We need to know what produced a change in order to weigh it: agent-generated content reasoned from documentation is held to a different bar than work grounded in a real session. Contributions that hide their authoring environment will be closed.
 
-**All PRs MUST target the `dev` branch, not `main`.** `main` is the released branch; active work lands on `dev` first. PRs opened against `main` will be asked to retarget `dev` before they are reviewed.
+**PRs in this fork MUST target `main`.** The fork does not maintain an upstream-style `dev` branch. Upstream contribution rules apply only when contributing methodology-neutral work separately to `obra/superpowers`.
 
 ## What We Will Not Accept
 
@@ -57,13 +71,13 @@ Every PR must solve a real problem that someone actually experienced. "My review
 
 Superpowers core contains general-purpose skills that benefit all users regardless of their project. Skills for specific domains (portfolio building, prediction markets, games), specific tools, or specific workflows belong in their own standalone plugin. Ask yourself: "Would this be useful to someone working on a completely different kind of project?" If not, publish it separately.
 
-### Fork-specific changes
+### Fork-specific changes submitted upstream
 
-If you maintain a fork with customizations, do not open PRs to sync your fork or push fork-specific changes upstream. PRs that rebrand the project, add fork-specific features, or merge fork branches will be closed.
+Do not submit this repository's code-first methodology, branding, or fork synchronization changes to `obra/superpowers`. Contributions to `horneticus93/superpowers` may and should improve the fork, but methodology-neutral upstream contributions must be prepared separately against upstream's own branch and contribution rules.
 
 ### Fabricated content
 
-PRs containing invented claims, fabricated problem descriptions, or hallucinated functionality will be closed immediately. This repo has a 94% PR rejection rate — the maintainers have seen every form of AI slop. They will notice.
+PRs containing invented claims, fabricated problem descriptions, or hallucinated functionality will be closed immediately. Token-efficiency claims must be framed with their evidence and limitations; do not invent benchmark percentages.
 
 ### Bundled unrelated changes
 

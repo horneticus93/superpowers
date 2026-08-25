@@ -2,6 +2,12 @@
 
 Complete guide for using Superpowers with [OpenCode.ai](https://opencode.ai).
 
+> This guide installs the code-first fork, whose primary difference from
+> upstream is production implementation before new or changed tests. The goal
+> is lower token and tool-call overhead in modern agent workflows while keeping
+> automated verification mandatory. Read
+> [Code-First Fork: Rationale and Contract](CODE-FIRST-FORK.md).
+
 ## Installation
 
 Add superpowers to the `plugin` array in your `opencode.json` (global or project-level):

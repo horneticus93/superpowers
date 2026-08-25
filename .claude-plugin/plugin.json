@@ -1,6 +1,6 @@
 {
   "name": "superpowers",
-  "description": "Core skills library for Claude Code: code-first verification, debugging, collaboration patterns, and proven techniques",
+  "description": "Code-first Superpowers fork for Claude Code: production implementation before tests, designed to reduce agent token and tool-call overhead while retaining verification",
   "version": "6.3.0",
   "author": {
     "name": "Jesse Vincent",
@@ -12,6 +12,7 @@
   "keywords": [
     "skills",
     "code-first",
+    "token-efficient",
     "debugging",
     "collaboration",
     "best-practices",

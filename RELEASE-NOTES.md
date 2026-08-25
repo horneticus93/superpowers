@@ -1,6 +1,10 @@
 # Superpowers Code-First Fork Notes
 
-This fork tracks the Superpowers skills framework while using a code-first development methodology.
+This fork tracks the Superpowers skills framework while using a code-first development methodology designed to reduce token and tool-call overhead in modern flagship-model agent workflows.
+
+The complete motivation, upstream comparison, workflow contract, and claim
+limits are documented in
+[`docs/CODE-FIRST-FORK.md`](docs/CODE-FIRST-FORK.md).
 
 For the complete release history before this fork diverged, see the [upstream repository](https://github.com/obra/superpowers/releases).
 
@@ -10,6 +14,7 @@ Base: Superpowers v6.3.0.
 
 ### Development methodology
 
+- Documented why mandatory TDD is no longer the default in this fork: modern flagship models can implement reviewed requirements directly, avoiding duplicated failing-test authorship and repeated agent narration.
 - Added `code-first-verification`: implement production behavior, review and smoke-check it, then write focused automated tests and run broader verification.
 - Reordered implementation plans so production changes precede new or modified tests.
 - Updated bug-fix guidance to investigate root cause, implement the fix, confirm the symptom, and add regression protection afterward.
