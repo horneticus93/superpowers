@@ -7,7 +7,7 @@ description: Use when you have a spec or requirements for a multi-step task, bef
 
 ## Overview
 
-Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, and how to verify it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. Code first, tests afterward. Frequent commits.
 
 Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
 
@@ -45,11 +45,25 @@ independently testable deliverable.
 ## Bite-Sized Task Granularity
 
 **Each step is one action (2-5 minutes):**
-- "Write the failing test" - step
-- "Run it to make sure it fails" - step
-- "Implement the minimal code to make the test pass" - step
-- "Run the tests and make sure they pass" - step
+- "Implement the production behavior" - step
+- "Review the diff and smoke-check the behavior" - step
+- "Write focused tests for the completed behavior" - step
+- "Run focused and broader verification" - step
 - "Commit" - step
+
+## Code-First Ordering
+
+For every task that changes production code, order the steps this way:
+
+1. Implement the production change.
+2. Review the diff and run a practical smoke check.
+3. Write or update automated tests for the completed behavior.
+4. Run focused tests, then the required broader gates.
+5. Commit the verified change.
+
+Existing tests may be read or run as a baseline before implementation, but the plan must not instruct the implementer to create or modify tests before the production change. Explicit test-only tasks are exempt because they intentionally leave production code unchanged.
+
+**REQUIRED SUB-SKILL:** Use `superpowers:code-first-verification` for production-code tasks.
 
 ## Plan Document Header
 
@@ -95,7 +109,19 @@ include this section.]
   and return types. A task's implementer sees only their own task; this
   block is how they learn the names and types neighboring tasks use.]
 
-- [ ] **Step 1: Write the failing test**
+- [ ] **Step 1: Implement production behavior**
+
+```python
+def function(input):
+    return expected
+```
+
+- [ ] **Step 2: Review and smoke-check the implementation**
+
+Run: `python -c 'from src.path import function; assert function("input") == "expected"'`
+Expected: exit 0
+
+- [ ] **Step 3: Write focused tests for the completed behavior**
 
 ```python
 def test_specific_behavior():
@@ -103,19 +129,7 @@ def test_specific_behavior():
     assert result == expected
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
-
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: FAIL with "function not defined"
-
-- [ ] **Step 3: Write minimal implementation**
-
-```python
-def function(input):
-    return expected
-```
-
-- [ ] **Step 4: Run test to verify it passes**
+- [ ] **Step 4: Run focused and broader verification**
 
 Run: `pytest tests/path/test.py::test_name -v`
 Expected: PASS

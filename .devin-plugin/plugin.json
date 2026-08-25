@@ -1,20 +1,21 @@
 {
   "name": "superpowers",
-  "version": "6.3.0",
-  "description": "An agentic skills framework & software development methodology that works: planning, TDD, debugging, and collaboration workflows.",
+  "version": "1.0.0",
+  "description": "Code-first Superpowers methodology fork: production implementation before tests, designed to reduce agent token and tool-call overhead while retaining verification.",
   "author": {
     "name": "Jesse Vincent",
     "email": "jesse@fsck.com"
   },
-  "homepage": "https://github.com/obra/superpowers",
-  "repository": "https://github.com/obra/superpowers",
+  "homepage": "https://github.com/horneticus93/superpowers",
+  "repository": "https://github.com/horneticus93/superpowers",
   "license": "MIT",
   "keywords": [
     "brainstorming",
     "subagent-driven-development",
     "skills",
     "planning",
-    "tdd",
+    "code-first",
+    "token-efficient",
     "debugging",
     "code-review",
     "workflow"

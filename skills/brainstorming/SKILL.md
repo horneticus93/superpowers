@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: "Use when starting any creative work - creating features, building components, adding functionality, or modifying behavior. MUST explore user intent, requirements, and design before implementation."
 ---
 
 # Brainstorming Ideas Into Designs
@@ -89,7 +89,7 @@ your path and complete them in order.
 2. **Ask clarifying questions** — one at a time, the ones that matter
 3. **Present short design in chat** — approach, files touched, testing
 4. **Get approval** — STOP and wait for an explicit yes; presenting the design and starting in the same breath is skipping the gate
-5. **Implement** — proceed with the normal development workflow (TDD applies); no plan document
+5. **Implement** — proceed with the normal development workflow (`superpowers:code-first-verification` applies); no plan document
 
 **Architectural:**
 1. **Explore project context** — check files, docs, recent commits

@@ -1,11 +1,23 @@
 # Superpowers
 
-Superpowers is a complete software development methodology for your coding agents, built on top of a set of composable skills and some initial instructions that make sure your agent uses them.
+> [!IMPORTANT]
+> This is the **code-first fork** maintained at
+> [`horneticus93/superpowers`](https://github.com/horneticus93/superpowers), not
+> the upstream [`obra/superpowers`](https://github.com/obra/superpowers)
+> methodology. Its defining difference is implementation order: the agent writes
+> and reviews production code first, then writes focused automated tests and runs
+> broad verification. See [Why this fork exists](#why-this-fork-exists) and the
+> [complete fork rationale](docs/CODE-FIRST-FORK.md).
+
+Superpowers is a complete software development methodology for coding agents,
+built on top of composable skills and initial instructions that make sure the
+agent uses them.
 
 ## Table of Contents
 
+- [Why this fork exists](#why-this-fork-exists)
 - [How it works](#how-it-works)
-- [Commercial Services](#commercial-services)
+- [Upstream Commercial Services](#upstream-commercial-services)
 - [Getting Started](#installation)
   - [Claude Code](#claude-code)
   - [Antigravity](#antigravity)
@@ -30,21 +42,51 @@ Superpowers is a complete software development methodology for your coding agent
 - [License](#license)
 - [Visual companion telemetry](#visual-companion-telemetry)
 
+## Why this fork exists
+
+This fork is based on the engineering premise that modern flagship coding models
+can produce strong, idiomatic production code directly from a reviewed
+specification and relevant repository context. In long agentic workflows,
+mandatory test-driven development (TDD) can therefore add a costly ceremony:
+generate a deliberately failing test, run it, inspect the expected failure,
+implement the code, and run the test again — often with additional subagent and
+review narration around every phase.
+
+Each extra generation, file edit, tool call, test run, and captured output
+consumes tokens, context-window capacity, and wall-clock time. This fork removes
+that mandatory pre-implementation cycle. The agent instead implements the
+bounded production change from approved requirements, reviews and smoke-checks
+the result, and only then writes focused tests that protect the completed
+behavior. It finishes with the same broader build, lint, test, review, and
+verification gates.
+
+The goal is **lower token consumption and less agent ceremony without weakening
+delivery evidence**. Token savings vary by model, repository, and task, so this
+project does not claim a universal percentage. It treats mandatory TDD as an
+outdated default for modern flagship-model agent workflows, not as a universally
+invalid technique. Tests remain required; only their authorship order changes.
+
+Read [Code-First Fork: Rationale and Contract](docs/CODE-FIRST-FORK.md) for the
+exact workflow, exceptions, safety model, and upstream synchronization policy.
+
 ## How it works
 
 It starts from the moment you fire up your coding agent. As soon as it sees that you're building something, it *doesn't* just jump into trying to write code. Instead, it steps back and asks you what you're really trying to do. 
 
 Once it's teased a spec out of the conversation, it shows it to you in chunks short enough to actually read and digest. 
 
-After you've signed off on the design, your agent puts together an implementation plan that's clear enough for an enthusiastic junior engineer with poor taste, no judgement, no project context, and an aversion to testing to follow. It emphasizes true red/green TDD, YAGNI (You Aren't Gonna Need It), and DRY. 
+After you've signed off on the design, your agent puts together an implementation plan that's clear enough for an enthusiastic junior engineer with poor taste, no judgement, no project context, and an aversion to testing to follow. It emphasizes code-first implementation followed by focused automated verification, YAGNI (You Aren't Gonna Need It), and DRY.
 
 Next up, once you say "go", it launches a *subagent-driven-development* process, having agents work through each engineering task, inspecting and reviewing their work, and continuing forward. It's not uncommon for your agent to work autonomously for a couple hours at a time without deviating from the plan you put together.
 
 There's a bunch more to it, but that's the core of the system. And because the skills trigger automatically, you don't need to do anything special. Your coding agent just has Superpowers.
 
-## Commercial Services
+## Upstream Commercial Services
 
-If you're using Superpowers in enterprise and could benefit from commercial support, additional tooling, or managed spending, please don't hesitate to drop us a line at sales@primeradiant.com.
+Prime Radiant offers commercial support for the upstream Superpowers framework.
+Those services are not operated by this fork's maintainer. If they are relevant
+to you, contact `sales@primeradiant.com` and confirm whether the engagement can
+support this fork's code-first methodology.
 
 ## Installation
 
@@ -52,30 +94,18 @@ Installation differs by harness. If you use more than one, install Superpowers s
 
 ### Claude Code
 
-Superpowers is available via the [official Claude plugin marketplace](https://claude.com/plugins/superpowers)
-
-#### Official Marketplace
-
-- Install the plugin from Anthropic's official marketplace:
-
-  ```bash
-  /plugin install superpowers@claude-plugins-official
-  ```
-
-#### Superpowers Marketplace
-
-The Superpowers marketplace provides Superpowers and some other related plugins for Claude Code.
+Install this code-first fork from its repository marketplace. Marketplace copies published by other sources may contain a different development methodology.
 
 - Register the marketplace:
 
   ```bash
-  /plugin marketplace add obra/superpowers-marketplace
+  /plugin marketplace add horneticus93/superpowers
   ```
 
 - Install the plugin from this marketplace:
 
   ```bash
-  /plugin install superpowers@superpowers-marketplace
+  /plugin install superpowers@superpowers-dev
   ```
 
 ### Antigravity
@@ -83,7 +113,7 @@ The Superpowers marketplace provides Superpowers and some other related plugins 
 Install Superpowers as a plugin from this repository:
 
 ```bash
-agy plugin install https://github.com/obra/superpowers
+agy plugin install https://github.com/horneticus93/superpowers
 ```
 
 Antigravity runs the plugin's session-start hook, so Superpowers is active from
@@ -91,46 +121,48 @@ the first message. Reinstall with the same command to update.
 
 ### Codex App
 
-Superpowers is available via the [official Codex plugin marketplace](https://github.com/openai/plugins).
+The public marketplace entry may point to upstream Superpowers. Register this
+repository as a personal marketplace so Codex installs the code-first fork:
 
-- In the Codex app, click on Plugins in the sidebar.
-- You should see `Superpowers` in the Coding section.
-- Click the `+` next to Superpowers and follow the prompts.
+```bash
+git clone https://github.com/horneticus93/superpowers.git
+cd superpowers
+codex plugin marketplace add "$PWD"
+```
+
+Restart Codex if it was open, click **Plugins** in the sidebar, and install
+`superpowers` from the `superpowers-dev` marketplace.
 
 ### Codex CLI
 
-Superpowers is available via the [official Codex plugin marketplace](https://github.com/openai/plugins).
+Clone and register this fork, then install its marketplace entry:
 
-- Open the plugin search interface:
-
-  ```bash
-  /plugins
-  ```
-
-- Search for Superpowers:
-
-  ```bash
-  superpowers
-  ```
-
-- Select `Install Plugin`.
+```bash
+git clone https://github.com/horneticus93/superpowers.git
+cd superpowers
+codex plugin marketplace add "$PWD"
+codex plugin install superpowers@superpowers-dev
+```
 
 ### Cursor
 
-- In Cursor Agent chat, install from marketplace:
+The public marketplace entry may point to upstream Superpowers. For this fork,
+clone the repository and load it as a local plugin:
 
-  ```text
-  /add-plugin superpowers
-  ```
+```bash
+git clone https://github.com/horneticus93/superpowers.git
+mkdir -p ~/.cursor/plugins/local
+ln -s "$(pwd)/superpowers" ~/.cursor/plugins/local/superpowers-code-first
+```
 
-- Or search for "superpowers" in the plugin marketplace.
+Restart Cursor or run **Developer: Reload Window**.
 
 ### Devin CLI
 
 - Install the plugin from this repository:
 
   ```bash
-  devin plugins install obra/superpowers
+  devin plugins install horneticus93/superpowers
   ```
 
 - Update to the latest version with:
@@ -144,13 +176,13 @@ Superpowers is available via the [official Codex plugin marketplace](https://git
 - Register the marketplace:
 
   ```bash
-  droid plugin marketplace add https://github.com/obra/superpowers
+  droid plugin marketplace add https://github.com/horneticus93/superpowers
   ```
 
 - Install the plugin:
 
   ```bash
-  droid plugin install superpowers@superpowers
+  droid plugin install superpowers@superpowers-dev
   ```
 
 ### Gemini CLI
@@ -158,7 +190,7 @@ Superpowers is available via the [official Codex plugin marketplace](https://git
 - Install the extension:
 
   ```bash
-  gemini extensions install https://github.com/obra/superpowers
+  gemini extensions install https://github.com/horneticus93/superpowers
   ```
 
 - Update later:
@@ -172,50 +204,30 @@ Superpowers is available via the [official Codex plugin marketplace](https://git
 - Register the marketplace:
 
   ```bash
-  copilot plugin marketplace add obra/superpowers-marketplace
+  copilot plugin marketplace add horneticus93/superpowers
   ```
 
 - Install the plugin:
 
   ```bash
-  copilot plugin install superpowers@superpowers-marketplace
+  copilot plugin install superpowers@superpowers-dev
   ```
 
 ### Grok Build CLI
 
-Superpowers is available via the [official Grok plugin marketplace](https://github.com/xai-org/plugin-marketplace).
-
-- Install the plugin from xAI's official marketplace:
-
-  ```bash
-  grok plugin install superpowers@xai-official --trust
-  ```
-
-- Or open the marketplace in the TUI, search for Superpowers, and install it:
-
-  ```text
-  /marketplace
-  ```
+The official Grok marketplace entry is maintained separately and may point to
+upstream Superpowers. This fork does not currently publish a Grok marketplace
+entry; do not use the official listing if you require the code-first workflow.
 
 ### Kimi Code
 
-Superpowers is available in Kimi Code's plugin marketplace.
+Install directly from this repository so Kimi uses the code-first fork:
 
-- Open Kimi Code's plugin manager:
+```text
+/plugins install https://github.com/horneticus93/superpowers
+```
 
-  ```text
-  /plugins
-  ```
-
-- Go to `Marketplace` > `Superpowers` and install it.
-
-- Or install directly from this repository:
-
-  ```text
-  /plugins install https://github.com/obra/superpowers
-  ```
-
-- Detailed docs: [docs/README.kimi.md](docs/README.kimi.md)
+Detailed docs: [docs/README.kimi.md](docs/README.kimi.md)
 
 ### OpenCode
 
@@ -225,7 +237,7 @@ already use it in another harness.
 - Tell OpenCode:
 
   ```
-  Fetch and follow instructions from https://raw.githubusercontent.com/obra/superpowers/refs/heads/main/.opencode/INSTALL.md
+  Fetch and follow instructions from https://raw.githubusercontent.com/horneticus93/superpowers/refs/heads/main/.opencode/INSTALL.md
   ```
 
 - Detailed docs: [docs/README.opencode.md](docs/README.opencode.md)
@@ -235,7 +247,7 @@ already use it in another harness.
 Install Superpowers as a Pi package from this repository:
 
 ```bash
-pi install git:github.com/obra/superpowers
+pi install git:github.com/horneticus93/superpowers
 ```
 
 For local development, run Pi with this checkout loaded as a temporary package:
@@ -251,7 +263,7 @@ The Pi package loads the Superpowers skills and a small extension that injects t
 Install Superpowers as a Hermes plugin from this repository:
 
 ```bash
-hermes plugins install obra/superpowers --enable
+hermes plugins install horneticus93/superpowers --enable
 ```
 
 Restart any active Hermes sessions after installing. Note: Hermes has no
@@ -268,7 +280,7 @@ turn loses the bootstrap — start a fresh session if skills stop triggering.
 
 4. **subagent-driven-development** or **executing-plans** - Activates with plan. Dispatches fresh subagent per task with two-stage review (spec compliance, then code quality), or executes in batches with human checkpoints.
 
-5. **test-driven-development** - Activates during implementation. Enforces RED-GREEN-REFACTOR: write failing test, watch it fail, write minimal code, watch it pass, commit. Deletes code written before tests.
+5. **code-first-verification** - Activates during implementation. Requires production behavior first, then focused tests and fresh verification evidence.
 
 6. **requesting-code-review** - Activates between tasks. Reviews against plan, reports issues by severity. Critical issues block progress.
 
@@ -278,18 +290,21 @@ turn loses the bootstrap — start a fresh session if skills stop triggering.
 
 ## Community
 
-Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of the folks at [Prime Radiant](https://primeradiant.com).
+The underlying Superpowers framework was built by
+[Jesse Vincent](https://blog.fsck.com) and the Prime Radiant contributors. This
+code-first fork is distributed and maintained separately at
+[`horneticus93/superpowers`](https://github.com/horneticus93/superpowers).
 
-- **Discord**: [Join us](https://discord.gg/35wsABTejz) for community support, questions, and sharing what you're building with Superpowers
-- **Issues**: https://github.com/obra/superpowers/issues
-- **Release announcements**: [Sign up](https://primeradiant.com/superpowers/) to get notified about new versions
+- **Fork issues**: https://github.com/horneticus93/superpowers/issues
+- **Upstream Discord**: [Superpowers community](https://discord.gg/35wsABTejz)
+- **Upstream announcements**: [Prime Radiant releases](https://primeradiant.com/superpowers/)
 
 ## What's Inside
 
 ### Skills Library
 
-**Testing**
-- **test-driven-development** - RED-GREEN-REFACTOR cycle (includes testing anti-patterns reference)
+**Implementation and testing**
+- **code-first-verification** - Production code first, focused automated tests afterward (includes good-test design reference)
 
 **Debugging**
 - **systematic-debugging** - 4-phase root cause process (includes root-cause-tracing, defense-in-depth, condition-based-waiting techniques)
@@ -312,7 +327,7 @@ Superpowers is built by [Jesse Vincent](https://blog.fsck.com) and the rest of t
 
 ## Philosophy
 
-- **Test-Driven Development** - Write tests first, always
+- **Code-first verification** - Implement production behavior first, then write focused tests
 - **Systematic over ad-hoc** - Process over guessing
 - **Complexity reduction** - Simplicity as primary goal
 - **Evidence over claims** - Verify before declaring success
@@ -321,13 +336,17 @@ Read [the original release announcement](https://blog.fsck.com/2025/10/09/superp
 
 ## Contributing
 
-The general contribution process for Superpowers is below. Keep in mind that we don't generally accept contributions of new skills and that any updates to skills must work across all of the coding agents we support.
+Contributions to this fork must preserve the code-first contract documented in
+[`docs/CODE-FIRST-FORK.md`](docs/CODE-FIRST-FORK.md). Fork-specific methodology
+changes must not be submitted upstream, where they conflict with the original
+project's development model.
 
-1. Fork the repository
-2. Switch to the 'dev' branch
-3. Create a branch for your work
+1. Fork or clone `horneticus93/superpowers`
+2. Create a branch from `main`
+3. Make the production or documentation change
 4. Follow the `writing-skills` skill for creating and testing new and modified skills
-5. Submit a PR, being sure to fill in the pull request template.
+5. Run the code-first policy, relevant tests, and behavioral evals
+6. Submit a PR to this fork's `main` branch and complete the pull request template
 
 Skill-behavior tests use the drill eval harness from [superpowers-evals](https://github.com/prime-radiant-inc/superpowers-evals/), cloned into `evals/` — see `evals/README.md` for setup. Plugin-infrastructure tests live at `tests/` and run via the relevant `run-*.sh` or `npm test`.
 
@@ -335,7 +354,10 @@ See `skills/writing-skills/SKILL.md` for the complete guide.
 
 ## Updating
 
-Superpowers updates are somewhat coding-agent dependent, but are often automatic.
+Update from `horneticus93/superpowers`, not an upstream marketplace entry, or
+the code-first workflow may be replaced. The exact update mechanism depends on
+the coding-agent harness; use the same fork-specific source shown in the
+installation section.
 
 ## License
 

@@ -1,5 +1,10 @@
 # Porting Superpowers to a New Harness
 
+This document applies to the code-first fork described in
+[`CODE-FIRST-FORK.md`](CODE-FIRST-FORK.md). A new harness must preserve its
+production-before-new-tests workflow and must not silently install the upstream
+methodology instead.
+
 This guide explains how to add support for a new harness — an IDE, CLI, or
 agent runner that isn't Claude Code — so that Superpowers skills auto-trigger
 there the same way they do natively.
@@ -111,7 +116,7 @@ real port.
 |---|---|---|
 | **Skill discovery + invocation** | The model must be able to load a skill's full content on demand | If there's no native skill tool, the sanctioned fallback is to `read` the relevant `SKILL.md` directly — see Part 5. A harness with neither a skill tool nor file-read cannot work. |
 | **File read / write / edit** | Nearly every skill manipulates files | Essential. No workaround. |
-| **Run shell commands** | TDD, verification, git workflows | Essential. |
+| **Run shell commands** | Implementation, verification, git workflows | Essential. |
 | **Subagent / task dispatch** | `dispatching-parallel-agents`, `subagent-driven-development` | Degradable: if unavailable, those specific skills tell the model to do the work inline or report the missing capability — *never* to invent a `Task` call. Some harnesses gate this behind a config flag (e.g. Codex needs multi-agent enabled). |
 | **Todo / task tracking** | Progress tracking in several skills | Degradable: fall back to a plan file or `TODO.md`. |
 | **Web fetch / search** | A few skills | Degradable. |
@@ -674,7 +679,7 @@ it. Distribution differs per harness ecosystem — find yours:
 
 | Channel | Example | What you do |
 |---|---|---|
-| Native plugin marketplace | Claude Code | Register in `.claude-plugin/marketplace.json`; users `/plugin install`. The external `superpowers-marketplace` repo is the source of truth users install from — see the release steps in `CLAUDE.md`. |
+| Repository marketplace | Claude Code | This fork's `.claude-plugin/marketplace.json` is the source of truth. Users register `horneticus93/superpowers`, then install `superpowers@superpowers-dev`. |
 | External marketplace fork, synced by script | Codex | `scripts/sync-to-codex-plugin.sh` rsyncs the tracked plugin files into a separate fork repo and opens a PR. Read its include/exclude list so you ship the right tree (it deliberately drops repo-internal dirs and other harnesses' dotdirs). |
 | Git-URL extension install | Gemini, Kimi Code, OpenCode | Users install from a git URL (`gemini extensions install …`; Kimi Code `/plugins install …`; an `opencode.json` `plugin` array entry). Document the exact command. |
 | Package-manifest fields | pi | Declared through fields in the repo-root `package.json`; users install via the harness's package command. |
@@ -764,7 +769,9 @@ dispatcher pattern.
 
 ## Part 8 — Submitting the PR
 
-- Target the **`dev`** branch. One harness per PR.
+- Target this fork's **`main`** branch. One harness per PR. If contributing a
+  methodology-neutral port separately to upstream, follow upstream's current
+  branch policy instead.
 - Fill in the PR template's **"New harness support"** section and paste the
   complete acceptance-test transcript (the "Let's make a react todo list"
   session showing `brainstorming` auto-triggering). A PR without this proof will

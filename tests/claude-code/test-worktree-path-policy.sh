@@ -9,8 +9,8 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 USING_SKILL="$REPO_ROOT/skills/using-git-worktrees/SKILL.md"
 FINISHING_SKILL="$REPO_ROOT/skills/finishing-a-development-branch/SKILL.md"
-ROTOTILL_SPEC="$REPO_ROOT/docs/superpowers/specs/2026-04-06-worktree-rototill-design.md"
-ROTOTILL_PLAN="$REPO_ROOT/docs/superpowers/plans/2026-04-06-worktree-rototill.md"
+COMPAT_SPEC="$REPO_ROOT/docs/superpowers/specs/2026-03-23-codex-app-compatibility-design.md"
+COMPAT_PLAN="$REPO_ROOT/docs/superpowers/plans/2026-03-23-codex-app-compatibility.md"
 
 failures=0
 
@@ -55,9 +55,9 @@ assert_contains "$USING_SKILL" 'default to `.worktrees/` at the project root' "u
 assert_not_contains "$FINISHING_SKILL" "~/.config/superpowers/worktrees" "finishing-a-development-branch does not treat old global path as owned"
 assert_contains "$FINISHING_SKILL" '`.worktrees/` or `worktrees/`' "finishing-a-development-branch keeps project-local cleanup ownership"
 
-assert_not_contains "$ROTOTILL_SPEC" "~/.config/superpowers/worktrees" "rototill spec does not preserve old global path policy"
-assert_not_contains "$ROTOTILL_PLAN" "~/.config/superpowers/worktrees" "rototill plan does not preserve old global path policy"
-assert_not_contains "$ROTOTILL_PLAN" "legacy path compat" "rototill plan does not advertise legacy path compatibility"
+assert_not_contains "$COMPAT_SPEC" "~/.config/superpowers/worktrees" "compatibility spec does not preserve old global path policy"
+assert_not_contains "$COMPAT_PLAN" "~/.config/superpowers/worktrees" "compatibility plan does not preserve old global path policy"
+assert_not_contains "$COMPAT_PLAN" "legacy path compat" "compatibility plan does not advertise legacy path compatibility"
 
 echo ""
 

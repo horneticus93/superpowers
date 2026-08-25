@@ -1,6 +1,6 @@
 {
   "name": "superpowers-dev",
-  "description": "Development marketplace for Superpowers core skills library",
+  "description": "Marketplace for the code-first, token-efficient Superpowers methodology fork",
   "owner": {
     "name": "Jesse Vincent",
     "email": "jesse@fsck.com"
@@ -8,8 +8,8 @@
   "plugins": [
     {
       "name": "superpowers",
-      "description": "Core skills library for Claude Code: TDD, debugging, collaboration patterns, and proven techniques",
-      "version": "6.3.0",
+      "description": "Code-first Superpowers fork: production implementation before tests, designed to reduce agent token and tool-call overhead while retaining verification",
+      "version": "1.0.0",
       "source": "./",
       "author": {
         "name": "Jesse Vincent",

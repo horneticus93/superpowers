@@ -2,13 +2,19 @@
 
 Complete guide for using Superpowers with [OpenCode.ai](https://opencode.ai).
 
+> This guide installs the code-first fork, whose primary difference from
+> upstream is production implementation before new or changed tests. The goal
+> is lower token and tool-call overhead in modern agent workflows while keeping
+> automated verification mandatory. Read
+> [Code-First Fork: Rationale and Contract](CODE-FIRST-FORK.md).
+
 ## Installation
 
 Add superpowers to the `plugin` array in your `opencode.json` (global or project-level):
 
 ```json
 {
-  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"]
+  "plugin": ["superpowers@git+https://github.com/horneticus93/superpowers.git"]
 }
 ```
 
@@ -91,7 +97,7 @@ To pin a specific version, use a branch or tag:
 
 ```json
 {
-  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git#v5.0.3"]
+  "plugin": ["superpowers@git+https://github.com/horneticus93/superpowers.git#main"]
 }
 ```
 
@@ -134,7 +140,7 @@ the plugin, try installing with system npm and pointing OpenCode at the local
 package:
 
 ```powershell
-npm install superpowers@git+https://github.com/obra/superpowers.git --prefix "$HOME\.config\opencode"
+npm install superpowers@git+https://github.com/horneticus93/superpowers.git --prefix "$HOME\.config\opencode"
 ```
 
 Then use the installed package path in `opencode.json`:
@@ -158,6 +164,6 @@ Then use the installed package path in `opencode.json`:
 
 ## Getting Help
 
-- Report issues: https://github.com/obra/superpowers/issues
-- Main documentation: https://github.com/obra/superpowers
+- Report issues: https://github.com/horneticus93/superpowers/issues
+- Main documentation: https://github.com/horneticus93/superpowers
 - OpenCode docs: https://opencode.ai/docs/

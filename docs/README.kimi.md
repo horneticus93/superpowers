@@ -2,28 +2,25 @@
 
 Complete guide for using Superpowers with [Kimi Code](https://github.com/MoonshotAI/kimi-code).
 
+> This guide installs the code-first fork, whose primary difference from
+> upstream is production implementation before new or changed tests. The goal
+> is lower token and tool-call overhead in modern agent workflows while keeping
+> automated verification mandatory. Read
+> [Code-First Fork: Rationale and Contract](CODE-FIRST-FORK.md).
+
 ## Installation
 
-Superpowers is available in Kimi Code's plugin marketplace.
-
-Open the plugin manager:
+Install directly from this repository. Marketplace entries maintained by other
+publishers may use the upstream methodology.
 
 ```text
-/plugins
+/plugins install https://github.com/horneticus93/superpowers
 ```
 
-Go to `Marketplace` > `Superpowers` and install it.
-
-You can also install from this repository:
+To pin the current fork branch explicitly:
 
 ```text
-/plugins install https://github.com/obra/superpowers
-```
-
-For unreleased validation against `dev`, pin the branch explicitly:
-
-```text
-/plugins install https://github.com/obra/superpowers/tree/dev
+/plugins install https://github.com/horneticus93/superpowers/tree/main
 ```
 
 Kimi Code applies plugin changes to new sessions. After installing, updating, enabling, disabling, or reloading a plugin, start a fresh session with `/new`.
@@ -78,7 +75,7 @@ Select Superpowers and update it from there. Start a fresh session with `/new` a
 Kimi Code installs the latest GitHub release for a bare repository URL when one exists. To test unreleased changes before the next Superpowers release, install the branch explicitly:
 
 ```text
-/plugins install https://github.com/obra/superpowers/tree/dev
+/plugins install https://github.com/horneticus93/superpowers/tree/main
 ```
 
 ### Skills not triggering

@@ -1,18 +1,19 @@
 {
   "name": "superpowers",
   "displayName": "Superpowers",
-  "description": "Core skills library: TDD, debugging, collaboration patterns, and proven techniques",
-  "version": "6.3.0",
+  "description": "Code-first Superpowers fork: production implementation before tests, designed to reduce agent token and tool-call overhead while retaining verification",
+  "version": "1.0.0",
   "author": {
     "name": "Jesse Vincent",
     "email": "jesse@fsck.com"
   },
-  "homepage": "https://github.com/obra/superpowers",
-  "repository": "https://github.com/obra/superpowers",
+  "homepage": "https://github.com/horneticus93/superpowers",
+  "repository": "https://github.com/horneticus93/superpowers",
   "license": "MIT",
   "keywords": [
     "skills",
-    "tdd",
+    "code-first",
+    "token-efficient",
     "debugging",
     "collaboration",
     "best-practices",

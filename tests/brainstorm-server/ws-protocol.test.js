@@ -22,9 +22,9 @@ let ws;
 try {
   ws = require(SERVER_PATH);
 } catch (e) {
-  // Module doesn't exist yet (TDD — tests written before implementation)
+  // Report a clear setup error if the implementation module is unavailable.
   console.error(`Cannot load ${SERVER_PATH}: ${e.message}`);
-  console.error('This is expected if running tests before implementation.');
+  console.error('Ensure the implementation module is present before running this suite.');
   process.exit(1);
 }
 
